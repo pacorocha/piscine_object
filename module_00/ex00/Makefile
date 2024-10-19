@@ -1,7 +1,7 @@
 NAME = my_program
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp other_source.cpp
+SRCS = main.cpp Bank.cpp Account.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
