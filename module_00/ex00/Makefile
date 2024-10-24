@@ -1,5 +1,5 @@
 NAME = my_program
-CXX = c++
+CXX = clang++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = main.cpp Bank.cpp Account.cpp
 OBJS = $(SRCS:.cpp=.o)

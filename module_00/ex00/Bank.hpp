@@ -12,8 +12,14 @@ class Bank
 		Bank(Bank const &src);
 		~Bank(void);
 
+		void addAccount(Account *account);
+		void deleteAccount(Account *account);
+		void deposit(Account *account, int amount);
+		void withdraw(Account *account, int amount);
+		float getLiquidity(void);
+
 	private:
-		int _liquidity;
+		float _liquidity;
 		std::vector<Account *> _accounts;
 };
 
