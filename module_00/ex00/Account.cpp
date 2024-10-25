@@ -6,11 +6,16 @@ Account::Account(void) {
 	this->_id = ID++;
 }
 
+Account::Account(int value) {
+	this->_id = ID++;
+	this->_value = value;
+}
+
 int Account::getId() const {
 	return this->_id;
 }
 
-int Account::getValue() const {
+float Account::getValue() const {
 	return this->_value;
 }
 
@@ -21,6 +26,6 @@ void Account::setValue(int initial_amount) {
 Account::~Account(void) {}
 
 std::ostream& operator<<(std::ostream& out, const Account& account) {
-	out << "Account " << account.getId() << " has " << account.getValue() << " funds.";
+	out << "\e[0;33mAccount [" << account.getId() << "]\033[0m has " << account.getValue() << " funds.";
 	return out;
 };

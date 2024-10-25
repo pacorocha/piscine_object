@@ -14,13 +14,13 @@ class Account {
 		~Account(void);
 
 		int getId() const;
-		int getValue() const;
+		float getValue() const;
 		void setId(int id);
 		void setValue(int value);
 
 	private:
 		int _id;
-		int _value;
+		float _value;
 	};
 
 
