@@ -5,14 +5,7 @@
 #include <iostream>
 
 class Account {
-	protected:
-		static int ID;
-
 	public:
-		Account(void);
-		Account(int value);
-		~Account(void);
-
 		int getId() const;
 		float getValue() const;
 		void setId(int id);
@@ -21,6 +14,13 @@ class Account {
 	private:
 		int _id;
 		float _value;
+		static int ID;
+
+		Account(void);
+		Account(int value);
+		~Account(void);
+
+		friend class Bank;
 	};
 
 

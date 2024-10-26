@@ -37,13 +37,19 @@ void Bank::deposit(Account* account, int amount)
 	_liquidity += fee;
 	float final_amount = amount - fee;
 	account->setValue(account->getValue() + final_amount);
-	std::cout << "Made a \e[0;34mdeposit\033[0m of " << " to account with ID: " << account->getId() << std::endl;
+	std::cout << "Made a \e[0;34mdeposit\033[0m of " << final_amount << " to account with ID: " << account->getId() << std::endl;
 }
 
 void Bank::withdraw(Account* account, int amount)
 {
-	account->setValue(account->getValue() - amount);
-	std::cout << "Made a \e[0;33mwithdrawal\033[0m of " << amount << " from account with ID: " << account->getId() << std::endl;
+	float account_funds = account->getValue();
+	if (amount > account_funds) {
+		std::cout << "\e[0;31mUnsufficient funds\033[0m in account with ID: " << account->getId() << std::endl;
+	}
+	else {
+		account->setValue(account_funds - amount);
+		std::cout << "Made a \e[0;33mwithdrawal\033[0m of " << amount << " from account with ID: " << account->getId() << std::endl;
+	}
 }
 
 float Bank::getLiquidity(void) const {
@@ -52,6 +58,17 @@ float Bank::getLiquidity(void) const {
 
 std::vector<Account *> Bank::getAccounts(void) const {
 	return this->_accounts;
+}
+
+void Bank::loan(Account *account, int amount) {
+	if (amount > _liquidity) {
+		std::cout << "\e[0;31mUnsufficient funds\033[0m to make a loan of " << amount << " to account with ID: " << account->getId() << std::endl;
+	}
+	else {
+		_liquidity -= amount;
+		account->setValue(account->getValue() + amount);
+		std::cout << "Made a \e[0;33mloan \033[0m of " << amount << " to account with ID: " << account->getId() << std::endl;
+	}
 }
 
 std::ostream& operator<< (std::ostream& os, const Bank& bank)

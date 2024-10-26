@@ -17,6 +17,7 @@ class Bank
 		void deposit(Account *account, int amount);
 		void withdraw(Account *account, int amount);
 		float getLiquidity(void) const;
+		void loan(Account *account, int amount);
 		std::vector<Account *> getAccounts(void) const;
 
 	private:
