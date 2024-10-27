@@ -1,5 +1,19 @@
 #include "Bank.hpp"
 
+int Bank::_accountId = 1;
+
+Bank::Account::Account(int id, int value) :
+	_id(id),
+	_value(value) {}
+
+int Bank::Account::getId() const {
+    return _id;
+}
+
+int Bank::Account::getValue() const {
+    return _value;
+}
+
 Bank::Bank()
 {
 	_liquidity = 0;
@@ -12,51 +26,65 @@ Bank::~Bank()
 	}
 }
 
-Account* Bank::createAccount(int value)
+Bank::Account* Bank::createAccount(int value)
 {
-	Account* account = new Account(value);
-	_accounts.push_back(account);
+	int accountId = _accountId++;
+	if (accountId >= _accounts.size()) {
+		_accounts.resize(accountId + 1, NULL);
+	}
+	Account* account = new Account(accountId, value);
+	_accounts[accountId] = account;
 	return account;
 }
 
-void Bank::deleteAccount(Account *account)
+const Bank::Account& Bank::operator[](int id) const
 {
-	std::cout << "\e[0;31mDeleting\033[0m account with ID: " << account->getId() << std::endl;
-    for (std::vector<Account*>::iterator it = _accounts.begin(); it != _accounts.end(); ++it) {
-        if (*it == account) {
-            _accounts.erase(it);
-            delete account;
-            return;
-        }
-    }
+	if (id <= 0 || id >= _accounts.size()) {
+		throw std::out_of_range("Account ID out of range");
+	}
+	return *_accounts[id];
 }
 
-void Bank::deposit(Account* account, int amount)
+void Bank::deleteAccount(int id)
 {
+	if (id <= 0 || id >= _accounts.size() || _accounts[id] == NULL) {
+		throw std::out_of_range("Account ID out of range");
+	}
+	delete _accounts[id];
+	_accounts[id] = NULL;
+}
+
+void Bank::deposit(int id, int amount)
+{
+	if (amount <= 0) {
+		throw std::invalid_argument("Deposit amount must be positive");
+	}
 	float fee = amount * 0.05;
 	_liquidity += fee;
 	float final_amount = amount - fee;
-	account->setValue(account->getValue() + final_amount);
-	std::cout << "Made a \e[0;34mdeposit\033[0m of " << final_amount << " to account with ID: " << account->getId() << std::endl;
+	Bank::Account& account = const_cast<Account&>(operator[](id));
+	account._value += final_amount;
+	std::cout << "Made a \e[0;34mdeposit\033[0m of " << final_amount << " to account with ID: " << account._id << std::endl;
 }
 
-void Bank::withdraw(Account* account, int amount)
+void Bank::withdraw(int id, int amount)
 {
-	float account_funds = account->getValue();
-	if (amount > account_funds) {
-		std::cout << "\e[0;31mUnsufficient funds\033[0m in account with ID: " << account->getId() << std::endl;
+	if (amount <= 0) {
+		throw std::invalid_argument("Withdrawal amount must be positive");
 	}
-	else {
-		account->setValue(account_funds - amount);
-		std::cout << "Made a \e[0;33mwithdrawal\033[0m of " << amount << " from account with ID: " << account->getId() << std::endl;
+	Bank::Account& account = const_cast<Account&>(operator[](id));
+	if (account._value < amount) {
+		throw std::invalid_argument("Insufficient funds for withdrawal");
 	}
+	account._value -= amount;
+	std::cout << "Made a \e[0;33mwithdrawal\033[0m of " << amount << " from account with ID: " << account._id << std::endl;
 }
 
 float Bank::getLiquidity(void) const {
 	return this->_liquidity;
 }
 
-std::vector<Account *> Bank::getAccounts(void) const {
+std::vector<Bank::Account *> Bank::getAccounts(void) const {
 	return this->_accounts;
 }
 

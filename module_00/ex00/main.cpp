@@ -5,8 +5,8 @@ int main(void) {
 	Bank bank;
 
 	// Account* account4 = new Account();
-	Account* account1 = bank.createAccount(1000);
-	Account* account2 = bank.createAccount(1000);
+	Bank::Account* account1 = bank.createAccount(1000);
+	Bank::Account* account2 = bank.createAccount(1000);
 
 	std::cout << *account1 << std::endl;
 	std::cout << *account2 << std::endl;
