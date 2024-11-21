@@ -1,5 +1,4 @@
 #include "Bank.hpp"
-#include "Account.hpp"
 
 int main(void) {
 	Bank bank;
@@ -17,16 +16,28 @@ int main(void) {
 	bank.deposit(account1->getId(), 1000);
 	std::cout << std::endl;
 
-	bank.withdraw(account1->getId(), 2000);
+	try {
+		bank.withdraw(account1->getId(), 2000);
+	} catch (const std::invalid_argument& e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 	std::cout << std::endl;
 
-	bank.withdraw(account1->getId(), 200);
+	try {
+		bank.withdraw(account1->getId(), -200);
+	} catch (const std::invalid_argument& e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 	std::cout << std::endl;
 
 	std::cout << *account1 << std::endl;
 	std::cout << std::endl;
 
-	bank.deposit(account2->getId(), 500);
+	try {
+		bank.deposit(account2->getId(), -500);
+	} catch (const std::invalid_argument& e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 	std::cout << std::endl;
 
 	std::cout << bank << std::endl;

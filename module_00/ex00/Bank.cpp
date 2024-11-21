@@ -69,20 +69,16 @@ void Bank::deposit(int id, int amount)
 
 void Bank::withdraw(int id, int amount)
 {
-	try {
-		if (amount <= 0) {
-			throw std::invalid_argument("Withdrawal amount must be positive");
-		}
-		Bank::Account& account = const_cast<Account&>(operator[](id));
-		if (account._value < amount) {
-			throw std::invalid_argument("Insufficient funds for withdrawal");
-		}
-		account._value -= amount;
-		std::cout << "Made a \e[0;33mwithdrawal\033[0m of " << amount
-		<< " from account with ID: " << account._id << std::endl;
-	} catch (const std::invalid_argument& e) {
-		std::cerr << "Error: " << e.what() << std::endl;
+	if (amount <= 0) {
+		throw std::invalid_argument("Withdrawal amount must be positive");
 	}
+	Bank::Account& account = const_cast<Account&>(operator[](id));
+	if (account._value < amount) {
+		throw std::invalid_argument("Insufficient funds for withdrawal");
+	}
+	account._value -= amount;
+	std::cout << "Made a \e[0;33mwithdrawal\033[0m of " << amount
+	<< " from account with ID: " << account._id << std::endl;
 }
 
 float Bank::getLiquidity(void) const {
