@@ -20,5 +20,11 @@ int main() {
 	graph2.addLine(Vector2(20, 30), Vector2(40, 50));
 
 	graph.display();
+	graph2.saveAsPNG("graph2.png");
 
+	//Graph graph3(20, 20);
+	//graph3.readFromFile("points.txt");
+	//graph3.display();
+
+	return 0;
 }
