@@ -1,6 +1,6 @@
-NAME = test
+NAME = graph_test
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -lpng
 SRCS = main.cpp Vector2.cpp Graph.cpp
 OBJS = $(SRCS:.cpp=.o)
 

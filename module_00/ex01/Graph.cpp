@@ -19,6 +19,10 @@ void Graph::addPoint(const Vector2& point) {
 	}
 }
 
+void Graph::addLine(const Vector2& start, const Vector2& end) {
+	_lines.push_back(std::make_pair(start, end));
+}
+
 void Graph::display(void) const {
 	for (int y = static_cast<int>(_size.getY()) - 1; y >= 0; --y) {
 		std::cout << std::setw(1) << y << " ";

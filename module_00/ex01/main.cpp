@@ -14,5 +14,11 @@ int main() {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 
+	Graph graph2(100, 100);
+    graph2.addPoint(Vector2(20, 30));
+    graph2.addPoint(Vector2(40, 50));
+	graph2.addLine(Vector2(20, 30), Vector2(40, 50));
+
 	graph.display();
+
 }
