@@ -4,34 +4,26 @@ int main(void)
 {
 	Position pos1(10, 20, 10);
 	Statistic stat1(1, 1);
+	std::cout << std::endl;
 
-	Worker worker1("Worker1", pos1, stat1);
-	Worker worker2("Worker2", pos1, stat1);
+	Shovel shovel1(5);
+	Worker w1("Worker1", pos1, stat1);
+	Worker w2("Worker2", pos1, stat1);
+	std::cout << std::endl;
 
-	Shovel shovel1;
+	shovel1.display();
 
-	std::cout << "\nGiving shovel to Worker1..." << std::endl;
-	worker1.giveShovel(&shovel1);
-	worker1.display();
-	worker2.display();
+	w1.giveShovel(&shovel1);
+	w1.useShovel();
+	w1.display();
+	w2.display();
+	std::cout << std::endl;
 
-	std::cout << "\nGiving shovel to Worker2..." << std::endl;
-	worker2.giveShovel(&shovel1);
-	worker1.display();
-	worker2.display();
-
-	std::cout << "\nTaking shovel from worker..." << std::endl;
-	Shovel *returned_shovel = worker2.takeShovel();
-	worker1.display();
-	worker2.display();
-
-	std::cout << "\nWorker will be destroyed, but shovel remains..."
-			  << std::endl;
-
-	if (returned_shovel == &shovel1)
-	{
-		std::cout << "Shovel is still the same object!" << std::endl;
-	}
+	w2.giveShovel(&shovel1);
+	w2.useShovel();
+	w1.display();
+	w2.display();
+	std::cout << std::endl;
 
 	return 0;
 }

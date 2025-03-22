@@ -13,6 +13,12 @@ Worker::Worker(std::string name, Position coords, Statistic stats)
 Worker::~Worker(void)
 {
 	std::cout << "\e[0;31mWorker " << _name << " destroyed\033[0m" << std::endl;
+	if (_shovel)
+	{
+		std::cout << _name << " is deleted, but the shovel remains intact!"
+				  << std::endl;
+		_shovel->setOwner(NULL);
+	}
 }
 
 std::string Worker::getName()
@@ -36,36 +42,55 @@ void Worker::setStatistic(Statistic stats)
 	_stats = stats;
 }
 
-void Worker::giveShovel(Shovel *shovel)
+void Worker::giveShovel(Shovel *newShovel)
 {
-	if (shovel->getWorker() != NULL)
+	if (_shovel == newShovel)
 	{
-		// Remove shovel from current owner
-		Worker *currentOwner = shovel->getWorker();
-		currentOwner->_shovel = NULL;
+		std::cout << _name << " already has this shovel!" << std::endl;
+		return;
 	}
 
-	_shovel = shovel;
-	shovel->setWorker(this);
-	std::cout << "Worker " << _name << " received a shovel" << std::endl;
+	if (newShovel)
+	{
+		Worker *previousOwner = newShovel->getOwner();
+		if (previousOwner)
+		{
+			previousOwner->removeShovel();
+			std::cout << "Shovel transferred from " << previousOwner->_name
+					  << " to " << _name << std::endl;
+		}
+	}
+
+	// Assign the shovel
+	_shovel = newShovel;
+	if (_shovel)
+	{
+		_shovel->setOwner(this);
+	}
 }
 
-Shovel *Worker::takeShovel()
+void Worker::removeShovel()
 {
-	if (_shovel == NULL)
-		return NULL;
+	if (_shovel)
+	{
+		std::cout << _name << " no longer has a shovel." << std::endl;
+		_shovel->setOwner(NULL);
+		_shovel = NULL;
+	}
+}
 
-	Shovel *temp = _shovel;
-	_shovel->setWorker(NULL);
-	_shovel = NULL;
-	std::cout << "Worker " << _name << " lost the shovel" << std::endl;
-	return temp;
-}
-bool Worker::hasShovel()
+void Worker::useShovel()
 {
-	std::cout << "Worker " << _name << " has a shovel" << std::endl;
-	return _shovel != NULL;
+	if (_shovel)
+	{
+		_shovel->use();
+	}
+	else
+	{
+		std::cout << _name << " has no shovel to use!" << std::endl;
+	}
 }
+
 void Worker::display(void)
 {
 	std::cout << "Worker: " << _name << "\n";

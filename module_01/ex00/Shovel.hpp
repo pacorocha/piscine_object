@@ -7,7 +7,9 @@ class Worker;
 struct Shovel
 {
   public:
-	Shovel() : numberOfUses(10), _shovelUser(NULL)
+	int numberOfUses;
+	Worker *owner;
+	Shovel(int uses = 10) : numberOfUses(uses), owner(NULL)
 	{
 		std::cout << "\e[0;32mShovel created\033[0m" << std::endl;
 	}
@@ -15,23 +17,37 @@ struct Shovel
 	{
 		std::cout << "\e[0;32mShovel destroyed\033[0m" << std::endl;
 	}
-	void display()
-	{
-		std::cout << "\e[0;32mShovel uses: " << numberOfUses << "\033[0m"
-				  << std::endl;
-	}
-	void setWorker(Worker *worker)
-	{
-		_shovelUser = worker;
-	}
-	Worker *getWorker()
-	{
-		return _shovelUser;
-	}
-	int numberOfUses;
 
-  private:
-	Worker *_shovelUser;
+	void use()
+	{
+		if (numberOfUses > 0)
+		{
+			numberOfUses--;
+			std::cout << "Shovel used! Remaining uses: " << numberOfUses
+					  << std::endl;
+		}
+		else
+		{
+			std::cout << "Shovel is worn out!" << std::endl;
+		}
+	}
+	void setOwner(Worker *newOwner)
+	{
+		owner = newOwner;
+	}
+
+	Worker *getOwner() const
+	{
+		return owner;
+	}
+	int getUses() const
+	{
+		return numberOfUses;
+	}
+	void display() const
+	{
+		std::cout << "Shovel uses: " << numberOfUses << std::endl;
+	}
 };
 
 #endif // SHOVEL_HPP

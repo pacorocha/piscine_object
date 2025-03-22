@@ -18,9 +18,9 @@ class Worker
 	Statistic getStatistic();
 	void setPosition(Position coords);
 	void setStatistic(Statistic stats);
-	void giveShovel(Shovel *shovel);
-	Shovel *takeShovel();
-	bool hasShovel();
+	void giveShovel(Shovel *newShovel);
+	void removeShovel();
+	void useShovel();
 	void display();
 
   private:
