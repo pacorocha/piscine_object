@@ -1,15 +1,15 @@
 #ifndef SHOVEL_HPP
 #define SHOVEL_HPP
-#include <iostream>
+#include "ATool.hpp"
 
 class Worker;
 
-struct Shovel
+struct Shovel : public Tool
 {
+
   public:
-	int numberOfUses;
 	Worker *owner;
-	Shovel(int uses = 10) : numberOfUses(uses), owner(NULL)
+	Shovel(int uses) : Tool(uses), owner(NULL)
 	{
 		std::cout << "\e[0;32mShovel created\033[0m" << std::endl;
 	}
@@ -20,10 +20,10 @@ struct Shovel
 
 	void use()
 	{
-		if (numberOfUses > 0)
+		if (_numberOfUses > 0)
 		{
-			numberOfUses--;
-			std::cout << "Shovel used! Remaining uses: " << numberOfUses
+			_numberOfUses--;
+			std::cout << "Shovel used! Remaining uses: " << _numberOfUses
 					  << std::endl;
 		}
 		else
@@ -42,12 +42,12 @@ struct Shovel
 	}
 	int getUses() const
 	{
-		return numberOfUses;
+		return _numberOfUses;
 	}
 	void display() const
 	{
-		std::cout << "Shovel uses: " << numberOfUses << std::endl;
+		std::cout << "Shovel uses: " << _numberOfUses << std::endl;
 	}
 };
 
-#endif // SHOVEL_HPP
+#endif

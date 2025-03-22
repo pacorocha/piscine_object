@@ -2,8 +2,6 @@
 #define STATISTIC_H
 #include <iostream>
 
-#endif // STATISTIC_H
-
 struct Statistic
 {
 	int level;
@@ -19,3 +17,5 @@ struct Statistic
 				  << ", exp = " << exp << "\033[0m" << std::endl;
 	}
 };
+
+#endif

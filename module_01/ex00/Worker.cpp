@@ -98,7 +98,7 @@ void Worker::display(void)
 	std::cout << "Statistic - Level: " << _stats.level
 			  << ", Exp: " << _stats.exp << "\n";
 	if (_shovel)
-		std::cout << "Shovel - Uses: " << _shovel->numberOfUses << "\n";
+		std::cout << "Shovel - Uses: " << _shovel->getUses() << "\n";
 	else
 		std::cout << "No shovel\n";
 	std::cout << std::endl;

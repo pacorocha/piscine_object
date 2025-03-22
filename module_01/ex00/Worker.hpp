@@ -30,4 +30,4 @@ class Worker
 	Shovel *_shovel;
 };
 
-#endif // WORKER_HPP
+#endif
