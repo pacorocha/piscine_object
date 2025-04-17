@@ -6,10 +6,11 @@ class Worker;
 
 struct Shovel : public Tool
 {
+  private:
+	Worker *_owner;
 
   public:
-	Worker *owner;
-	Shovel(int uses) : Tool(uses), owner(NULL)
+	Shovel(int uses) : Tool(uses), _owner(NULL)
 	{
 		std::cout << "\e[0;32mShovel created\033[0m" << std::endl;
 	}
@@ -33,12 +34,12 @@ struct Shovel : public Tool
 	}
 	void setOwner(Worker *newOwner)
 	{
-		owner = newOwner;
+		_owner = newOwner;
 	}
 
 	Worker *getOwner() const
 	{
-		return owner;
+		return _owner;
 	}
 	int getUses() const
 	{

@@ -73,6 +73,15 @@
 		"new": "cpp",
 		"numbers": "cpp",
 		"streambuf": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"cstring": "cpp",
+		"ctime": "cpp",
+		"list": "cpp",
+		"map": "cpp",
+		"set": "cpp",
+		"unordered_set": "cpp",
+		"fstream": "cpp",
+		"iomanip": "cpp",
+		"sstream": "cpp"
 	}
 }
