@@ -87,50 +87,35 @@ void Worker::removeTool(Tool *tool)
 		std::find(_tools.begin(), _tools.end(), tool);
 	if (it != _tools.end())
 	{
+		// Set tool owner to NULL regardless of type
 		if (Shovel *shovel = dynamic_cast<Shovel *>(tool))
-		{
 			shovel->setOwner(NULL);
-			// Check workshops that require a shovel
-			std::vector<Workshop *> incompatibleWorkshops;
-			for (std::vector<Workshop *>::iterator wsIt = _workshops.begin();
-				 wsIt != _workshops.end(); ++wsIt)
-			{
-				if ((*wsIt)->workerHasTool(this) == false)
-				{
-					incompatibleWorkshops.push_back(*wsIt);
-				}
-			}
-			// Unregister from incompatible workshops
-			for (std::vector<Workshop *>::iterator wsIt =
-					 incompatibleWorkshops.begin();
-				 wsIt != incompatibleWorkshops.end(); ++wsIt)
-			{
-				(*wsIt)->releaseWorker(this);
-			}
-		}
 		else if (Hammer *hammer = dynamic_cast<Hammer *>(tool))
-		{
 			hammer->setOwner(NULL);
-			// Check workshops that require a hammer
-			std::vector<Workshop *> incompatibleWorkshops;
-			for (std::vector<Workshop *>::iterator wsIt = _workshops.begin();
-				 wsIt != _workshops.end(); ++wsIt)
-			{
-				if ((*wsIt)->workerHasTool(this) == false)
-				{
-					incompatibleWorkshops.push_back(*wsIt);
-				}
-			}
-			// Unregister from incompatible workshops
-			for (std::vector<Workshop *>::iterator wsIt =
-					 incompatibleWorkshops.begin();
-				 wsIt != incompatibleWorkshops.end(); ++wsIt)
-			{
-				(*wsIt)->releaseWorker(this);
-			}
-		}
+
+		// Remove the tool from inventory first
 		_tools.erase(it);
 		std::cout << _name << " no longer has this tool." << std::endl;
+
+		// Then check workshops and remove worker from those requiring the
+		// removed tool
+		std::vector<Workshop *> incompatibleWorkshops;
+		for (std::vector<Workshop *>::iterator wsIt = _workshops.begin();
+			 wsIt != _workshops.end(); ++wsIt)
+		{
+			if (!(*wsIt)->workerHasTool(this))
+			{
+				incompatibleWorkshops.push_back(*wsIt);
+			}
+		}
+
+		// Finally unregister from incompatible workshops
+		for (std::vector<Workshop *>::iterator wsIt =
+				 incompatibleWorkshops.begin();
+			 wsIt != incompatibleWorkshops.end(); ++wsIt)
+		{
+			(*wsIt)->releaseWorker(this);
+		}
 	}
 }
 

@@ -63,5 +63,10 @@ int main(void)
 	shop1.executeWorkDay();
 	shop2.executeWorkDay();
 
+	std::cout << std::endl;
+
+	std::cout << "**** REMOVE TOOLS FROM WORKER ****" << std::endl;
+	w2.removeTool(&shovel1);
+
 	return 0;
 }

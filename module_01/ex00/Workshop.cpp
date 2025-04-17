@@ -53,7 +53,8 @@ void Workshop::registerWorker(Worker *worker)
 
 	_workers.push_back(worker);
 	worker->registerToWorkshop(this);
-	std::cout << worker->getName() << " registered at " << _name << std::endl;
+	std::cout << "\e[0;35m" << worker->getName() << " registered at " << _name
+			  << "\033[0m" << std::endl;
 }
 
 void Workshop::releaseWorker(Worker *worker)
@@ -64,7 +65,9 @@ void Workshop::releaseWorker(Worker *worker)
 	{
 		_workers.erase(it);
 		worker->unregisterFromWorkshop(this);
-		std::cout << worker->getName() << " left " << _name << std::endl;
+		std::cout << "\e[0;35m" << worker->getName()
+				  << " has been released from " << _name << "\033[0m"
+				  << std::endl;
 	}
 }
 
